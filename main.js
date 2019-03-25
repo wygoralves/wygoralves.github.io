@@ -2,16 +2,19 @@
 var colors = generateRandomColors(6);
 var newcolors = document.querySelector("#newcolors");
 var gameheader = document.querySelector("#gameheader");
-var pickedcolorh1 = document.querySelector(".display-5");
+var pickedcolorh1 = document.querySelector(".pickedcolorh1");
 var squares = document.querySelectorAll(".square");
 var tryagain = document.querySelector("#tryagain");
 var pickedColor = pickColor();
+var randomheadercolor = pickColor();
 var tryagaintrue = true;
 var easybtn = document.querySelector("#easy");
 var hardbtn = document.querySelector("#hard");
 var numsquares = 6;
+var buttons = document.querySelector(".btn");
 
 pickedcolorh1.textContent = pickedColor;
+newcolors.addEventListener("click", newcolorsbtn);
 
 easybtn.addEventListener("click",function(){
     easybtn.classList.add("buttonactive");
@@ -50,9 +53,6 @@ for (let i = 0; i < squares.length; i++) {
         if (clickedcolor===pickedColor) {
             changecolors(clickedcolor);
             tryagain.textContent="Correto!";
-            /* tryagain.style.color=pickedColor;
-            easybtn.style.color=pickedColor;
-            hardbtn.style.color=pickedColor; */
             gameheader.style.backgroundColor=pickedColor;
             newcolors.textContent="Jogar novamente?"
         }else{
@@ -62,8 +62,6 @@ for (let i = 0; i < squares.length; i++) {
     });
     
 }
-
-newcolors.addEventListener("click",newcolorsbtn);
 
 function changecolors(color){
     for (let i = 0; i < squares.length; i++) {
@@ -96,7 +94,7 @@ function randomColor(){
 }
 
 function newcolorsbtn(){
-    newcolors.textContent="NOVAS CORES"
+    newcolors.textContent="NOVAS CORES";
     gameheader.style.backgroundColor="lightblue";
     tryagain.textContent=" ";
     colors=generateRandomColors(numsquares);
@@ -105,4 +103,11 @@ function newcolorsbtn(){
     for (let i = 0; i < squares.length; i++) {
         squares[i].style.backgroundColor = colors[i];
     }
+}
+
+function navbarcolors() {
+    easybtn.style.color = pickedColor;
+    hardbtn.style.color = pickedColor;
+    tryagain.style.color = pickedColor;
+    newcolors.style.color = pickedColor;
 }
