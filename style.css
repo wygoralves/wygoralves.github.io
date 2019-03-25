@@ -15,7 +15,8 @@
     font-family: 'Maven Pro', sans-serif;
     transition: 600ms;
 }
-#newcolors:hover{
+/* Hovers da navbar */
+/* #newcolors:hover{
     background: lightblue;
     color: whitesmoke;
 }
@@ -30,7 +31,7 @@
 .buttonactive{
     background: lightblue;
     color: whitesmoke;
-}
+} */
 body{
     background: #232323;
 }
@@ -42,6 +43,7 @@ body{
     margin: 1.66%;
     border-radius: 25px;
     transition: 600ms;
+    cursor: pointer;
 }
 .gamebg{
     max-width: 600px;
@@ -49,4 +51,10 @@ body{
 }
 .wrongbox{
     background: #232323;
+}
+
+.square:hover{
+    transition: 600ms;
+    border-radius: 100px;
+    transform: rotate(90deg);
 }
