@@ -95,7 +95,7 @@ function randomColor(){
 
 function newcolorsbtn(){
     newcolors.textContent="NOVAS CORES";
-    gameheader.style.backgroundColor="lightblue";
+    gameheader.style.backgroundColor="olivedrab";
     tryagain.textContent=" ";
     colors=generateRandomColors(numsquares);
     pickedColor=pickColor();
