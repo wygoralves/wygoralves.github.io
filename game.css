@@ -1,0 +1,35 @@
+.jumbotron {
+    background: olivedrab;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    margin-bottom: 0;
+    color: whitesmoke;
+    text-shadow: 1px 1px rgb(0, 70, 130);
+}
+.navigation { background: whitesmoke; }
+.btn {
+    color: gray;
+    font-weight: 900;
+    font-family: 'Maven Pro', sans-serif;
+    transition: 600ms;
+}
+body { background: #232323; }
+.square {
+    width: 30%;
+    padding-bottom: 30%;
+    float: left;
+    margin: 1.66%;
+    border-radius: 25px;
+    transition: 600ms;
+    cursor: pointer;
+}
+.gamebg {
+    max-width: 600px;
+    margin: 6% auto;
+}
+.wrongbox { background: #232323; }
+.square:hover {
+    transition: 600ms;
+    border-radius: 100px;
+    transform: rotate(90deg);
+}

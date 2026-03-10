@@ -1,74 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,900" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
-    <script defer src="main.js"></script>
-    <title>Encontre a cor!</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wygor Alves — Technical AI PM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Barlow:wght@400;500&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    
-    <section id="gameheader" class="jumbotron text-center">
-        <h1 class="display-4">ENCONTRE</h1>
-        <h1 class="display-5 pickedcolorh1"></h1>
-        <h1 class="display-4">A COR</h1>
-    </section>
 
-    <div class="container-fluid navigation">
-        <div class="container">
-            <div class="row flex text-center">
-                <div class="col">
-                    <button id="newcolors" type="button" class="btn btn-default">NOVAS CORES</button>    
-                </div>   
-                <div class="col">
-                    <button id="tryagain" type="button" class="btn btn-default"></button>
-                </div>   
-                <div class="col">
-                    <button id="easy" type="button" class="btn btn-default">FÁCIL</button>                
-                    <button id="hard" type="button" class="btn btn-default buttonactive">DIFÍCIL</button>                
-                    <button id="howtoplay" type="button" class="btn btn-default" data-toggle="modal" data-target=".modal"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
-                </div>   
-            </div>    
+  <!-- ── BOOT ── (skipped on repeat visits via sessionStorage) -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot-lines">
+      <span class="bl" data-d="0">INITIALIZING WYGOR_ALVES.SYS...</span>
+      <span class="bl" data-d="300">AI WORKFLOW ACTIVE — CLAUDE · CODEX · GEMINI</span>
+      <span class="bl" data-d="580">PROJECTS ONLINE — WYGG.CC · PANESADE.COM</span>
+      <span class="bl" data-d="840">READY.</span>
+    </div>
+  </div>
+
+  <!-- ── MOBILE NAV ── -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Navegação mobile">
+    <a href="#hero">PERFIL</a>
+    <a href="#history">HISTÓRICO</a>
+    <a href="#projects">PROJETOS</a>
+    <a href="#skills">STACK</a>
+    <a href="#contact">CONTATO</a>
+  </nav>
+
+  <!-- ── WRAPPER ── -->
+  <div class="wrapper">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" aria-label="Navegação principal">
+      <div class="sidebar-logo">WA</div>
+
+      <ul class="sidebar-nav">
+        <li><a href="#hero"     data-n="01">PERFIL</a></li>
+        <li><a href="#history"  data-n="02">HISTÓRICO</a></li>
+        <li><a href="#projects" data-n="03">PROJETOS</a></li>
+        <li><a href="#skills"   data-n="04">STACK</a></li>
+        <li><a href="#contact"  data-n="05">CONTATO</a></li>
+      </ul>
+
+      <div class="sidebar-foot">
+        <span id="live-clock">--:--:--</span>
+        <span>GYN, BR</span>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- ── HERO ── -->
+      <section class="hero" id="hero">
+        <div class="hero-inner">
+          <div class="hero-tag">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            DISPONÍVEL PARA PROJETOS
+          </div>
+
+          <h1 class="hero-name">
+            <span>WYGOR</span>
+            <span>ALVES</span>
+          </h1>
+
+          <div class="hero-sub">
+            <div class="hero-role">Technical AI<br>Product Manager</div>
+            <div class="rule-v" aria-hidden="true"></div>
+            <nav class="hero-links" aria-label="Links externos">
+              <a href="https://wygg.cc" target="_blank" rel="noopener">wygg.cc ↗</a>
+              <a href="https://linkedin.com/in/wygor" target="_blank" rel="noopener">linkedin ↗</a>
+              <a href="mailto:wygor96@gmail.com">wygor96@gmail.com</a>
+            </nav>
+          </div>
+
+          <p class="hero-bio">
+            Massive nerd. PM técnico apaixonado por aprender, codar e arquitetar o futuro do software.
+            AI-native builder usando LLMs para acelerar execução desde o GPT-3.5.
+            Hands-on em JS, SQL, Python e AI coding tools. 5 anos gerenciando produtos sem parar.
+          </p>
+
+          <p class="hero-creds" aria-label="Credenciais">
+            5 anos de PM &nbsp;·&nbsp; 5K+ workshops &nbsp;·&nbsp; 14K+ usuários &nbsp;·&nbsp; ARPA +62% &nbsp;·&nbsp; NPS −11→42
+          </p>
+
+          <a href="mailto:wygor96@gmail.com" class="hero-cta">Fale comigo →</a>
         </div>
-    </div>    
-    <!-- Modal -->
-    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Como jogar?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                </div>
-                <div class="modal-body">
-                    Clique no quadrado colorido abaixo que seja o mesmo do código rgb do título!
-                </div>
+      </section>
+
+      <!-- ── HISTORY ── -->
+      <section class="section" id="history">
+        <div class="section-lbl">02 — HISTÓRICO DE MISSÕES</div>
+
+        <div class="timeline">
+
+          <article class="tl-entry reveal" data-delay="0">
+            <div class="tl-date">JUN 2025 — PRESENTE</div>
+            <div class="tl-body">
+              <header class="tl-head">
+                <h3>Founder &amp; Hybrid Product Engineer</h3>
+                <span class="tl-co">wygg.cc</span>
+                <span class="badge-active">ATIVO</span>
+              </header>
+              <p>Fundou e construiu a wygg.cc solo como "One-Man Squad", fazendo a ponte entre estratégia de produto e execução técnica. Workflow AI-native com Codex CLI, Factory Droid, Gemini CLI e Claude Code — atuando simultaneamente como PM e Lead Engineer.</p>
             </div>
+          </article>
+
+          <article class="tl-entry reveal" data-delay="60">
+            <div class="tl-date">AGO 2023 — PRESENTE</div>
+            <div class="tl-body">
+              <header class="tl-head">
+                <h3>Group Product Manager</h3>
+                <span class="tl-co">Cilia Tecnologia</span>
+                <span class="tl-loc">Goiânia</span>
+              </header>
+              <p>PM do ERP para 5000+ oficinas mecânicas e 80% das seguradoras nacionais. Liderou squad com 15+ pessoas. Entregou AI multimodal com 90%+ de eficácia, NFe/NFSe, integração de sistema de estimativa de reparos e módulo ERP (Cilia Oficinas).</p>
+            </div>
+          </article>
+
+          <article class="tl-entry reveal" data-delay="120">
+            <div class="tl-date">AGO 2022 — AGO 2023</div>
+            <div class="tl-body">
+              <header class="tl-head">
+                <h3>Product Manager</h3>
+                <span class="tl-co">Palqee Technologies</span>
+                <span class="tl-loc">Londres, UK (Remoto)</span>
+              </header>
+              <p>Único PM do Palqee OS — SaaS de privacidade de dados G2 High Performer com 14K+ profissionais. Conduziu discovery do Palqee Prisma (AI-powered risk monitoring). Ganhou prêmios G2 Spring 2023 e "Users Love Us".</p>
+            </div>
+          </article>
+
+          <article class="tl-entry reveal" data-delay="180">
+            <div class="tl-date">JUL 2021 — AGO 2022</div>
+            <div class="tl-body">
+              <header class="tl-head">
+                <h3>Product Manager</h3>
+                <span class="tl-co">NectarCRM</span>
+                <span class="tl-loc">Goiânia</span>
+              </header>
+              <p>CRM B2B com 5K MAUs e 400 contas mid-market. ARPA +62%, NPS de −11 para 42 em menos de 2 anos. Lançou 4 novos produtos. Implementou OKRs em toda a empresa.</p>
+            </div>
+          </article>
+
+          <article class="tl-entry reveal tl-muted" data-delay="240">
+            <div class="tl-date">MAR 2018 — JUL 2021</div>
+            <div class="tl-body">
+              <header class="tl-head">
+                <h3>UX Researcher → Product Owner</h3>
+                <span class="tl-co">NectarCRM</span>
+              </header>
+              <p>Parte do squad fundador de produto. Estruturou e documentou todos os processos de design e desenvolvimento. Transição progressiva de UX Research para Product Management.</p>
+            </div>
+          </article>
+
         </div>
-    </div>
+      </section>
 
-    <div class="container gamebg">
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-    </div>
-    
+      <!-- ── PROJECTS ── -->
+      <section class="section" id="projects">
+        <div class="section-lbl">03 — DEPLOYMENTS ATIVOS</div>
+
+        <div class="proj-grid">
+
+          <a href="https://wygg.cc" target="_blank" rel="noopener" class="proj-card proj-featured reveal" data-delay="0">
+            <div class="proj-top">
+              <span class="proj-status live">● LIVE</span>
+              <span class="proj-num">001</span>
+            </div>
+            <p class="proj-tagline">O venture onde PM encontra engenharia.</p>
+            <h2>wygg.cc</h2>
+            <p>Plataforma construída inteiramente solo como "One-Man Squad". Arquitetura AI-native, operando como PM e Lead Engineer ao mesmo tempo. Prova viva de que PMs técnicos podem arquitetar e shipar produtos experimentais significativamente mais rápido quando dominam o workflow de AI — alternando entre OpenAI, Anthropic e Google conforme o caso de uso.</p>
+            <div class="proj-tags">
+              <span>AI-NATIVE</span>
+              <span>SOLO BUILD</span>
+              <span>FOUNDER</span>
+              <span>CLAUDE CODE</span>
+              <span>CODEX CLI</span>
+            </div>
+            <span class="proj-cta">VISITAR →</span>
+          </a>
+
+          <a href="https://panesade.com" target="_blank" rel="noopener" class="proj-card reveal" data-delay="80">
+            <div class="proj-top">
+              <span class="proj-status building">◐ BUILDING</span>
+              <span class="proj-num">002</span>
+            </div>
+            <h2>panesade.com</h2>
+            <p>Próximo projeto em construção. Mesma filosofia de execução acelerada por AI, em um novo domínio.</p>
+            <div class="proj-tags">
+              <span>EM CONSTRUÇÃO</span>
+              <span>AI-ASSISTED</span>
+            </div>
+            <span class="proj-cta">VISITAR →</span>
+          </a>
+
+          <a href="game.html" class="proj-card reveal" data-delay="160">
+            <div class="proj-top">
+              <span class="proj-status shipped">✓ SHIPPED</span>
+              <span class="proj-num">003</span>
+            </div>
+            <h2>Encontre a Cor</h2>
+            <p>Jogo de reconhecimento de cores RGB. Identifique o quadrado correto entre 6 opções. Modos fácil e difícil.</p>
+            <div class="proj-tags">
+              <span>JOGO</span>
+              <span>VANILLA JS</span>
+              <span>UX</span>
+            </div>
+            <span class="proj-cta">JOGAR →</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ── SKILLS ── -->
+      <section class="section" id="skills">
+        <div class="section-lbl">04 — COMO OPERO</div>
+
+        <!-- AI-native stack — featured, the real differentiator -->
+        <div class="sk-ai-block reveal" data-delay="0">
+          <div class="sk-ai-label">AI-NATIVE STACK</div>
+          <div class="sk-ai-tools">
+            <span>Claude Code</span>
+            <span>Codex CLI</span>
+            <span>Factory Droid</span>
+            <span>Gemini CLI</span>
+            <span>Cursor</span>
+          </div>
+          <p class="sk-ai-note">Alterna dinamicamente entre os modelos mais capazes — Anthropic, OpenAI, Google — para encontrar o cutting edge em cada problema. Prompt Design e Evaluation Frameworks como disciplinas de produto.</p>
+        </div>
+
+        <!-- Supporting skills — two columns -->
+        <div class="sk-lower">
+          <div class="sk-group reveal" data-delay="80">
+            <div class="sk-title">PRODUTO &amp; DADOS</div>
+            <ul>
+              <li>Product Strategy &amp; Vision</li>
+              <li>Go-to-Market Planning</li>
+              <li>Roadmap &amp; Backlog (Notion / Jira)</li>
+              <li>Scrumban · Scrum · Kanban</li>
+              <li>OKRs — implementado em 2 empresas</li>
+              <li>SQL (Queries complexas) · Python · API Integrations</li>
+              <li>Figma High-Fidelity · UX Research</li>
+            </ul>
+          </div>
+          <div class="sk-group reveal" data-delay="160">
+            <div class="sk-title">NEGÓCIOS</div>
+            <ul>
+              <li>B2B SaaS Strategy</li>
+              <li>Stakeholder Alignment</li>
+              <li>Revenue Modeling</li>
+              <li>Customer Success &amp; Onboarding</li>
+              <li>Competitive Analysis &amp; Market Research</li>
+              <li>JavaScript · Frontend Development</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CONTACT ── -->
+      <section class="section contact-section" id="contact">
+        <div class="section-lbl">05 — CONTATO</div>
+
+        <div class="contact-layout">
+          <h2 class="contact-hl">Vamos<br>construir<br>algo.</h2>
+
+          <div class="contact-list" role="list">
+            <a href="mailto:wygor96@gmail.com" class="contact-row" role="listitem">
+              <span class="cr-label">EMAIL</span>
+              <span class="cr-val">wygor96@gmail.com ↗</span>
+            </a>
+            <a href="https://linkedin.com/in/wygor" target="_blank" rel="noopener" class="contact-row" role="listitem">
+              <span class="cr-label">LINKEDIN</span>
+              <span class="cr-val">linkedin.com/in/wygor ↗</span>
+            </a>
+            <a href="https://wygg.cc" target="_blank" rel="noopener" class="contact-row" role="listitem">
+              <span class="cr-label">VENTURE</span>
+              <span class="cr-val">wygg.cc ↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    /* ── BOOT ──
+       CSS handles the fade automatically (animation).
+       JS only skips it on repeat visits via sessionStorage.
+       If JS fails entirely, the CSS animation still runs. ── */
+    try {
+      const bootEl = document.getElementById('boot');
+      if (sessionStorage.getItem('boot-seen')) {
+        bootEl.classList.add('boot-skip');
+      } else {
+        sessionStorage.setItem('boot-seen', '1');
+        const blines = document.querySelectorAll('.bl');
+        blines.forEach(bl => {
+          setTimeout(() => bl.classList.add('vis'), parseInt(bl.dataset.d || 0));
+        });
+      }
+    } catch (e) { /* sessionStorage unavailable — CSS animation handles it */ }
+
+    /* ── LIVE CLOCK ── */
+    const clockEl = document.getElementById('live-clock');
+    function tick() {
+      const n   = new Date();
+      const pad = v => String(v).padStart(2, '0');
+      if (clockEl) clockEl.textContent = `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+    }
+    setInterval(tick, 1000);
+    tick();
+
+    /* ── SCROLL REVEAL ── */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const d = parseInt(e.target.dataset.delay) || 0;
+          setTimeout(() => e.target.classList.add('in-view'), d);
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ── ACTIVE NAV (sidebar + mobile) ── */
+    const sections = document.querySelectorAll('section[id]');
+    const sideLinks = document.querySelectorAll('.sidebar-nav a');
+    const mobileLinks = document.querySelectorAll('.mobile-nav a');
+
+    const navObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          [sideLinks, mobileLinks].forEach(links => {
+            links.forEach(a => a.classList.remove('active'));
+            const active = [...links].find(a => a.getAttribute('href') === `#${id}`);
+            if (active) active.classList.add('active');
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => navObs.observe(s));
+  </script>
 </body>
-
 </html>
