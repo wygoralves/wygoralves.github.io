@@ -162,10 +162,10 @@
       height: 10px;
     }
 
-    /* ── hint ── */
-    .hint {
+    /* ── helper ── */
+    .helper {
       margin-top: 20px;
-      font-size: 12px;
+      font-size: 11px;
       color: #2a2a2a;
       user-select: none;
     }
@@ -192,13 +192,11 @@
       <div class="socials">
         <a href="mailto:wygor96@gmail.com">email</a>
         <a href="https://linkedin.com/in/wygor" target="_blank" rel="noopener">linkedin</a>
-        <a href="https://panesade.com" target="_blank" rel="noopener">panes</a>
+        <a href="https://panesade.com" target="_blank" rel="noopener">panesade.com</a>
         <a href="https://wygg.cc" target="_blank" rel="noopener">wygg.cc</a>
         <a href="https://github.com/wygoralves" target="_blank" rel="noopener">github</a>
       </div>
     </div>
-
-    <div class="sep">~</div>
 
     <div class="prompt-line">
       <span class="prompt-symbol">$</span>
@@ -206,15 +204,17 @@
     </div>
 
     <div class="output" id="output"></div>
-    <div class="hint" id="hint">press enter to run a command</div>
+    <div class="helper" id="helper"></div>
   </div>
 
   <script>
+    const sections = ['about', 'work', 'projects', 'contact'];
+    let sectionIndex = -1; // -1 = help
+
     const commands = {
       about:    { desc: 'who i am',        alias: 'a' },
       work:     { desc: 'career history',  alias: 'w' },
       projects: { desc: 'things i built',  alias: 'p' },
-      skills:   { desc: 'tools & stack',   alias: 's' },
       contact:  { desc: 'get in touch',    alias: 'c' },
       clear:    { desc: 'clear screen',    alias: null },
       help:     { desc: 'show commands',   alias: 'h' },
@@ -276,22 +276,13 @@
       projects: [
         { type: 'heading', text: 'projects' },
         { type: 'gap' },
-        { type: 'line', html: '  <a href="https://panesade.com" target="_blank" rel="noopener">panes</a>           local-first cockpit for ai-assisted coding' },
+        { type: 'line', html: '  <a href="https://panesade.com" target="_blank" rel="noopener">panesade.com</a>    local-first cockpit for ai-assisted coding' },
         { type: 'dim',  text: '                   tauri + react. chat, git, terminal, editor.' },
         { type: 'dim',  text: '                   built solo. open source. live.' },
         { type: 'gap' },
         { type: 'line', html: '  <a href="https://wygg.cc" target="_blank" rel="noopener">wygg.cc</a>          fast, minimal whiteboard to draw & diagram' },
         { type: 'dim',  text: '                   ai generation, smart connectors, mermaid.' },
         { type: 'dim',  text: '                   built solo. freemium. live.' },
-      ],
-
-      skills: [
-        { type: 'heading', text: 'skills' },
-        { type: 'gap' },
-        { type: 'line', text: '  ai tools   claude code · codex cli · gemini cli' },
-        { type: 'line', text: '  languages  javascript · python · sql' },
-        { type: 'line', text: '  product    discovery · okrs · roadmapping' },
-        { type: 'line', text: '  design     figma · ux research · prototyping' },
       ],
 
       contact: [
@@ -306,9 +297,7 @@
 
     const input = document.getElementById('cmd');
     const output = document.getElementById('output');
-    const hint = document.getElementById('hint');
-    const history = [];
-    let historyIndex = -1;
+    const helper = document.getElementById('helper');
 
     function render(lines) {
       let html = '';
@@ -343,18 +332,46 @@
       return v;
     }
 
+    function updateHelper() {
+      if (sectionIndex === -1) {
+        helper.textContent = 'arrow keys to browse sections';
+      } else {
+        const current = sections[sectionIndex];
+        const pos = `${sectionIndex + 1}/${sections.length}`;
+        helper.textContent = `${current} (${pos}) · esc to go back`;
+      }
+    }
+
+    function showSection(index) {
+      sectionIndex = index;
+      if (index === -1) {
+        render(data.help);
+      } else {
+        render(data[sections[index]]);
+      }
+      updateHelper();
+    }
+
     function exec(raw) {
       const cmd = resolve(raw);
 
       if (cmd === 'clear') {
         output.innerHTML = '';
+        sectionIndex = -1;
+        updateHelper();
         return;
       }
 
-      hint.style.display = 'none';
+      if (cmd === 'help') {
+        showSection(-1);
+        return;
+      }
 
       if (data[cmd]) {
+        const idx = sections.indexOf(cmd);
+        sectionIndex = idx !== -1 ? idx : -1;
         render(data[cmd]);
+        updateHelper();
       } else if (raw.trim() === '') {
         // noop
       } else {
@@ -365,15 +382,39 @@
       }
     }
 
+    document.addEventListener('keydown', (e) => {
+      // esc → back to help
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        input.value = '';
+        showSection(-1);
+        input.focus();
+        return;
+      }
+
+      // only handle arrows when input is empty (not typing)
+      if (input.value === '') {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = sectionIndex + 1;
+          if (next < sections.length) showSection(next);
+          return;
+        }
+
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = sectionIndex - 1;
+          if (prev >= -1) showSection(prev);
+          return;
+        }
+      }
+    });
+
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         const raw = input.value;
         input.value = '';
-        if (raw.trim()) {
-          history.push(raw.trim());
-          historyIndex = history.length;
-        }
-        exec(raw);
+        if (raw.trim()) exec(raw);
         return;
       }
 
@@ -383,29 +424,7 @@
         const v = input.value.trim().toLowerCase();
         if (!v) return;
         const matches = cmdNames.filter(n => n.startsWith(v));
-        if (matches.length === 1) {
-          input.value = matches[0];
-        } else if (matches.length > 1) {
-          hint.style.display = 'block';
-          hint.textContent = matches.join('  ');
-        }
-        return;
-      }
-
-      // arrow up/down history
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (history.length === 0) return;
-        historyIndex = Math.max(0, historyIndex - 1);
-        input.value = history[historyIndex];
-        return;
-      }
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (history.length === 0) return;
-        historyIndex = Math.min(history.length, historyIndex + 1);
-        input.value = historyIndex < history.length ? history[historyIndex] : '';
+        if (matches.length === 1) input.value = matches[0];
         return;
       }
     });
@@ -413,9 +432,8 @@
     // clicking anywhere focuses input
     document.body.addEventListener('click', () => input.focus());
 
-    // auto-show help on load
-    render(data.help);
-    hint.style.display = 'none';
+    // start on help
+    showSection(-1);
   </script>
 </body>
 </html>
