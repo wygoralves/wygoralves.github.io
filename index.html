@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>wygor alves</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     a { color: inherit; }
@@ -208,17 +209,35 @@
   </div>
 
   <script>
+    const commands = {
+      about:    { desc: 'who i am',        alias: 'a' },
+      work:     { desc: 'career history',  alias: 'w' },
+      projects: { desc: 'things i built',  alias: 'p' },
+      skills:   { desc: 'tools & stack',   alias: 's' },
+      contact:  { desc: 'get in touch',    alias: 'c' },
+      clear:    { desc: 'clear screen',    alias: null },
+      help:     { desc: 'show commands',   alias: 'h' },
+    };
+
+    const cmdNames = Object.keys(commands);
+    const aliasMap = {};
+    for (const [name, cmd] of Object.entries(commands)) {
+      if (cmd.alias) aliasMap[cmd.alias] = name;
+    }
+
     const data = {
-      help: [
-        { type: 'cmd', text: 'available commands:' },
-        { type: 'gap' },
-        { type: 'line', text: '  about       who i am' },
-        { type: 'line', text: '  work        career history' },
-        { type: 'line', text: '  projects    things i built' },
-        { type: 'line', text: '  skills      tools & stack' },
-        { type: 'line', text: '  contact     get in touch' },
-        { type: 'line', text: '  clear       clear screen' },
-      ],
+      help: (() => {
+        const lines = [
+          { type: 'cmd', text: 'available commands:' },
+          { type: 'gap' },
+        ];
+        for (const [name, cmd] of Object.entries(commands)) {
+          if (name === 'help') continue;
+          const label = cmd.alias ? `${name} (${cmd.alias})` : name;
+          lines.push({ type: 'line', text: `  ${label.padEnd(16)}- ${cmd.desc}` });
+        }
+        return lines;
+      })(),
 
       about: [
         { type: 'heading', text: 'about' },
@@ -285,6 +304,8 @@
     const input = document.getElementById('cmd');
     const output = document.getElementById('output');
     const hint = document.getElementById('hint');
+    const history = [];
+    let historyIndex = -1;
 
     function render(lines) {
       let html = '';
@@ -310,31 +331,88 @@
       return d.innerHTML;
     }
 
+    function resolve(raw) {
+      const v = raw.trim().toLowerCase();
+      if (aliasMap[v]) return aliasMap[v];
+      if (data[v] || v === 'clear') return v;
+      const match = cmdNames.filter(n => n.startsWith(v));
+      if (match.length === 1) return match[0];
+      return v;
+    }
+
+    function exec(raw) {
+      const cmd = resolve(raw);
+
+      if (cmd === 'clear') {
+        output.innerHTML = '';
+        return;
+      }
+
+      hint.style.display = 'none';
+
+      if (data[cmd]) {
+        render(data[cmd]);
+      } else if (raw.trim() === '') {
+        // noop
+      } else {
+        const suggestion = cmdNames.find(n => n.includes(raw.trim().toLowerCase()));
+        let msg = `command not found: ${esc(raw.trim())}. type help.`;
+        if (suggestion) msg = `command not found: ${esc(raw.trim())}. did you mean "${suggestion}"?`;
+        output.innerHTML = `<div class="output-line dim">${msg}</div>`;
+      }
+    }
+
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        const cmd = input.value.trim().toLowerCase();
+        const raw = input.value;
         input.value = '';
+        if (raw.trim()) {
+          history.push(raw.trim());
+          historyIndex = history.length;
+        }
+        exec(raw);
+        return;
+      }
 
-        if (cmd === 'clear' || cmd === 'c') {
-          output.innerHTML = '';
+      // tab completion
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const v = input.value.trim().toLowerCase();
+        if (!v) return;
+        const matches = cmdNames.filter(n => n.startsWith(v));
+        if (matches.length === 1) {
+          input.value = matches[0];
+        } else if (matches.length > 1) {
           hint.style.display = 'block';
-          return;
+          hint.textContent = matches.join('  ');
         }
+        return;
+      }
 
-        hint.style.display = 'none';
+      // arrow up/down history
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (history.length === 0) return;
+        historyIndex = Math.max(0, historyIndex - 1);
+        input.value = history[historyIndex];
+        return;
+      }
 
-        if (data[cmd]) {
-          render(data[cmd]);
-        } else if (cmd === '') {
-          // do nothing
-        } else {
-          output.innerHTML = `<div class="output-line dim">command not found: ${esc(cmd)}. type help for available commands.</div>`;
-        }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (history.length === 0) return;
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        input.value = historyIndex < history.length ? history[historyIndex] : '';
+        return;
       }
     });
 
     // clicking anywhere focuses input
     document.body.addEventListener('click', () => input.focus());
+
+    // auto-show help on load
+    render(data.help);
+    hint.style.display = 'none';
   </script>
 </body>
 </html>
