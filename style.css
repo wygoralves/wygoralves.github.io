@@ -144,7 +144,7 @@ body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.13em;
-  color: var(--text-mute);
+  color: var(--text-dim);
   padding: 8px 0;
   transition: color 180ms;
   position: relative;
@@ -154,7 +154,7 @@ body {
   content: attr(data-n);
   font-size: 9px;
   font-weight: 500;
-  color: var(--border-2);
+  color: var(--text-mute);
   flex-shrink: 0;
 }
 
@@ -207,42 +207,18 @@ body {
   width: 100%;
 }
 
-.hero-tag {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-family: var(--f-label);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--accent);
-  margin-bottom: 36px;
-}
-
-.pulse-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(224, 90, 32, 0.5); }
-  50%       { opacity: 0.7; box-shadow: 0 0 0 8px rgba(224, 90, 32, 0); }
-}
 
 .hero-name {
   font-family: var(--f-display);
-  font-weight: 800;
-  font-size: clamp(72px, 11vw, 148px);
-  line-height: 0.88;
-  letter-spacing: -0.04em;
+  font-weight: 700;
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--text);
   display: flex;
-  flex-direction: column;
-  margin-bottom: 36px;
+  flex-direction: row;
+  gap: 0.35em;
+  margin-bottom: 32px;
 }
 
 .hero-sub {
@@ -301,9 +277,14 @@ body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.09em;
-  color: var(--text-mute);
+  color: var(--text-dim);
   margin-bottom: 40px;
   line-height: 1.6;
+}
+
+.cred-hi {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 /* Primary CTA */
@@ -383,8 +364,8 @@ body {
 .tl-entry:last-child { border-bottom: 1px solid var(--border); }
 
 .tl-muted .tl-body h3,
-.tl-muted .tl-body p { color: var(--text-mute); }
-.tl-muted .tl-co { color: var(--text-mute) !important; }
+.tl-muted .tl-body p { color: var(--text-dim); }
+.tl-muted .tl-co { color: var(--text-dim) !important; }
 
 .tl-date {
   font-family: var(--f-label);
@@ -679,10 +660,10 @@ body {
 
 .contact-hl {
   font-family: var(--f-display);
-  font-size: clamp(48px, 6vw, 92px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 0.93;
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
   color: var(--text);
 }
 
